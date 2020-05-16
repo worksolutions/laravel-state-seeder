@@ -1,0 +1,23 @@
+{
+    "name": "worksolutions/laravel-state-seeder",
+    "description": "",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "keywords": [
+        "seeder",
+        "state",
+        "laravel-state-seeder"
+    ],
+    "authors": [
+        {
+            "name": "Ruslan Sabirov",
+            "email": "sabirov@worksolutions.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "WS\\StateSeeder\\": "src"
+        }
+    },
+    "require": {}
+}
