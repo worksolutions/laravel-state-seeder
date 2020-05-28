@@ -10,10 +10,11 @@ interface State
     /**
      * Generates specified type data
      * @param string $type Class name or another type for generation
-     * @param int $count
+     * @param int|null $count
+     * @param string|null $state
      * @return DataStream
      */
-    public function generate(string $type, int $count): DataStream;
+    public function generate(string $type, int $count = null, string $state = null): DataStream;
 
     /**
      * Creates a new state layer

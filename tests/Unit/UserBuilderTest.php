@@ -6,12 +6,14 @@
 namespace Unit;
 
 use WS\StateSeeder\State;
+use WS\StateSeeder\StateImp;
 
 class UserBuilderTest
 {
 
     public function state(): State
     {
+        return new StateImp();
     }
 
     public function simpleUsing()
@@ -21,6 +23,8 @@ class UserBuilderTest
             ->generate(Company::class, 10)
             ->random(3, AdvCompanies::generateReports())
             ->then(AdvCompanies::creteAnything())
+            ->forAll()
+            ->then()
         ;
 
         $state->coverWithLayer(SomeLayer::class);

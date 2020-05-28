@@ -33,7 +33,7 @@ interface DataStream
      * @param $modifier "undefined value or callable if random count param is present
      * @return $this
      */
-    public function random($count, $modifier): self;
+    public function random($count, $modifier = null): self;
 
     /**
      * Calls modifier for the first element in stream
