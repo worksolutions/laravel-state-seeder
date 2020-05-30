@@ -20,12 +20,12 @@ class DataStreamImp implements DataStream
     /**
      * DataStreamImp constructor.
      *
-     * @param Collection|Model $data
+     * @param Collection|Model|null $data
      */
-    public function __construct($data)
+    public function __construct($data = null)
     {
         if (!$data instanceof Collection) {
-            $data = collect([$data]);
+            $data = $data ? collect([$data]) : collect();
         }
         $this->collection = $data;
         $this->selection = null;
@@ -94,6 +94,6 @@ class DataStreamImp implements DataStream
 
     public function toArray(): array
     {
-        $this->collection->toArray();
+        return $this->collection->toArray();
     }
 }

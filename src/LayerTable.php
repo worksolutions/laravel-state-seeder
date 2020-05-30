@@ -2,27 +2,67 @@
 
 namespace WS\StateSeeder;
 
-class LayerTable implements StringTableQueue
+use Illuminate\Support\Collection;
+
+class LayerTable implements StringTable
 {
 
     /**
-     * @var array
+     * @var Collection
      */
     private $memoryTable;
 
     public function __construct()
     {
-        $this->memoryTable = [];
+        $this->memoryTable = new Collection();
     }
 
-    public function enqueue($item)
+    /**
+     * @param mixed $item
+     */
+    public function add($item)
     {
-        array_push($this->memoryTable, $item);
+        $this->memoryTable->add($item);
     }
 
     public function dequeue()
     {
-        return array_unshift($this->memoryTable);
+        // TODO ?
+    }
+
+    /**
+     * @return StateLayer|null
+     */
+    public function top()
+    {
+        return $this->memoryTable->last();
+    }
+
+    /**
+     * @param $key
+     * @return StateLayer|null
+     */
+    public function getTopBy($key)
+    {
+        return $this->memoryTable->last(self::fInstanceofClass($key));
+    }
+
+    /**
+     * @param $class
+     * @return \Closure
+     */
+    public static function fInstanceofClass($class) {
+        return function ($instance) use ($class) {
+            return $instance instanceof $class;
+        };
+    }
+
+    /**
+     * @return Collection
+     */
+    public function all(): Collection
+    {
+        return $this->memoryTable;
     }
 
     /**
@@ -30,6 +70,6 @@ class LayerTable implements StringTableQueue
      */
     public function isEmpty()
     {
-        return !empty($this->memoryTable);
+        return $this->memoryTable->isEmpty();
     }
 }

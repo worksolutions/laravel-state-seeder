@@ -8,4 +8,6 @@ namespace WS\StateSeeder;
 interface StateLayer extends DataSource
 {
     public function put(State $state): DataStream;
+
+    public function getDataStream(): DataStream;
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace WS\StateSeeder;
-
 
 class StateLayerImp implements StateLayer
 {
@@ -25,5 +23,10 @@ class StateLayerImp implements StateLayer
     public function put(State $state): DataStream
     {
 
+    }
+
+    public function getDataStream(): DataStream
+    {
+        return $this->stream;
     }
 }

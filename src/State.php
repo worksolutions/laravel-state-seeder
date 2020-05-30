@@ -26,9 +26,15 @@ interface State
     /**
      * Gets layer stream
      * @param string $layerClass
-     * @return DataStream
+     * @return DataStream|null
      */
-    public function getLayerStream(string $layerClass): DataStream;
+    public function getLayerStream(string $layerClass);
+
+    /**
+     * Gets top layer stream
+     * @return DataStream|null
+     */
+    public function topLayerStream();
 
     /**
      * Gets stream by specified type
