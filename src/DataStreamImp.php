@@ -96,4 +96,9 @@ class DataStreamImp implements DataStream
     {
         return $this->collection->toArray();
     }
+
+    public function getData(): Collection
+    {
+        return $this->collection;
+    }
 }

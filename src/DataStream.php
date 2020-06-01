@@ -5,6 +5,8 @@
 
 namespace WS\StateSeeder;
 
+use Illuminate\Support\Collection;
+
 interface DataStream
 {
     /**
@@ -61,4 +63,9 @@ interface DataStream
      * @return array
      */
     public function toArray(): array;
+
+    /**
+     * @return Collection
+     */
+    public function getData(): Collection;
 }

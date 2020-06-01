@@ -2,7 +2,9 @@
 
 namespace WS\StateSeeder;
 
+use Closure;
 use Exception;
+use Illuminate\Support\Collection;
 
 class StateImp implements State
 {
@@ -15,6 +17,33 @@ class StateImp implements State
     public function __construct()
     {
         $this->layerTable = new LayerTable();
+    }
+
+    /**
+     * @param Collection $collection
+     * @param string $type
+     * @return Closure
+     */
+    private static function fFillCollectionDataBy(&$collection, string $type)
+    {
+        return function (StateLayer $layer) use (&$collection, $type) {
+            $filtered = $layer
+                ->getDataStream()
+                ->getData()
+                ->filter(self::fInstanceofClass($type));
+            $collection = $collection->merge($filtered);
+        };
+    }
+
+    /**
+     * @param string $class
+     * @return Closure
+     */
+    private static function fInstanceofClass(string $class): Closure
+    {
+        return function ($instance) use ($class) {
+            return $instance instanceof $class;
+        };
     }
 
     public function generate(string $type, int $count = null, string $state = null): DataStream
@@ -60,20 +89,10 @@ class StateImp implements State
 
     public function getTypeStream(string $type): DataStream
     {
-        // TODO refactoring
+        if (!class_exists($type)) throw new Exception("Class:{$type} not found");
+
         $collection = collect();
-        $this->layerTable->all()
-            ->each(
-                function (StateLayer $layer) use ($collection, $type) {
-                    $collection
-                        ->merge(collect($layer->getDataStream()->toArray())
-                            ->filter(
-                                function ($item) use ($type) {
-                                    return $item instanceof $type;
-                                }
-                            )
-                        );
-                });
+        $this->layerTable->all()->each(self::fFillCollectionDataBy($collection, $type));
 
         return new DataStreamImp($collection);
     }
